@@ -1,0 +1,108 @@
+<div class="container mt-2">
+  <div class="col-md-12">
+  <h4 class="text-center">Empresas</h4>
+
+  <form (ngSubmit)="agregarEmpresa()" class="formulario-empresa mb-4">
+    <div class="form-group">
+      <label for="nit">NIT</label>
+      <input type="text" id="nit" class="form-control" [(ngModel)]="nuevoNit" name="nit" required />
+    </div>
+
+    <div class="form-group">
+      <label for="razonSocial">Razón Social</label>
+      <input type="text" id="razonSocial" class="form-control" [(ngModel)]="nuevaRazonSocial" name="razonSocial"
+        required />
+    </div>
+
+    <div class="form-group">
+      <label for="nombreComercial">Nombre Comercial</label>
+      <input type="text" id="nombreComercial" class="form-control" [(ngModel)]="nuevoNombreComercial"
+        name="nombreComercial" required />
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono</label>
+      <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" id="telefono" class="form-control" [(ngModel)]="nuevoTelefono" name="telefono" required />
+    </div>
+
+    <div class="form-group">
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" class="form-control" [(ngModel)]="nuevoCorreo" name="correo" required />
+    </div>
+
+    <div class="form-group">
+      <label for="pais">País</label>
+      <select id="pais" class="form-control" [(ngModel)]="paisSeleccionado" name="pais" (change)="onPaisChange()"
+        required>
+        <option [value]="null" disabled selected>Seleccione un país</option>
+        <option *ngFor="let pais of paises" [value]="pais.id_pais">
+          {{ pais.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="departamento">Departamento</label>
+      <select id="departamento" class="form-control" [(ngModel)]="departamentoSeleccionado" name="departamento"
+        (change)="onDepartamentoChange()" required>
+        <option [value]="null" disabled selected>Seleccione un departamento</option>
+        <option *ngFor="let departamento of departamentos" [value]="departamento.id_departamento">
+          {{ departamento.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="municipio">Municipio</label>
+      <select id="municipio" class="form-control" [(ngModel)]="municipioSeleccionado" name="municipio" required>
+        <option [value]="null" disabled selected>Seleccione un municipio</option>
+        <option *ngFor="let municipio of municipios" [value]="municipio.id_municipio">
+          {{ municipio.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <button *ngIf="!editando" type="submit" class="btn btn-secondary">
+      Registrar
+    </button>
+    <button *ngIf="editando" type="submit" class="btn btn-success">
+      Modificar
+    </button>
+
+  </form>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Acciones</th>
+        <th>NIT</th>
+        <th>Razón Social</th>
+        <th>Nombre Comercial</th>
+        <th>Teléfono</th>
+        <th>Correo</th>
+        <th>Departamento</th>
+        <th>Municipio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empresa of empresas">
+        <td>
+          <button class="btn btn-secondary btn-sm me-2" (click)="editarEmpresa(empresa)">
+            Editar
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarEmpresa(empresa.id_empresa)">
+            Eliminar
+          </button>
+        </td>
+        <td>{{ empresa.nit }}</td>
+        <td>{{ empresa.razon_social }}</td>
+        <td>{{ empresa.nombre_comercial }}</td>
+        <td>{{ empresa.telefono }}</td>
+        <td>{{ empresa.correo }}</td>
+        <td>{{ getDepartamentoNombre(empresa.id_departamento) }}</td>
+        <td>{{ getMunicipioNombre(empresa.id_municipio) }}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="container mt-2">
+    <div class="col-md-12">
+        <h4 class="text-center">Departamentos</h4>
+        <br>
+        <div class="mb-4">
+            <div class="d-flex align-items-center mb-2">
+                <select [(ngModel)]="paisSeleccionado" name="paisSeleccionado" class="form-select me-2"
+                    [ngClass]="{'is-invalid': isSubmitted && !paisSeleccionado}" required>
+                    <option value="" disabled [selected]="!paisSeleccionado">Seleccionar país</option>
+                    <option *ngFor="let pais of paises" [value]="pais.id_pais">
+                        {{ pais.nombre }}
+                    </option>
+                </select>
+
+                <input id="nuevoDepartamento" [(ngModel)]="nuevoDepartamento" class="form-control me-2"
+                    placeholder="Nombre del departamento" />
+
+                <button class="btn btn-dark" (click)="agregarDepartamento()"
+                    [disabled]="!paisSeleccionado || !nuevoDepartamento.trim()">
+                    Agregar
+                </button>
+            </div>
+
+            <div *ngIf="!paisSeleccionado || !nuevoDepartamento.trim()" class="text-danger small">
+                Debes seleccionar un país y escribir el nombre del departamento.
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">Acciones</th>
+                    <th style="width: 30%;">Nombre del Departamento</th>
+                    <th style="width: 30%;">País</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let departamento of departamentos">
+                    <td class="d-flex justify-content-start align-items-center">
+                        <button *ngIf="!departamento.editando" class="btn btn-secondary btn-sm me-2"
+                            (click)="habilitarEdicion(departamento)">
+                            Editar
+                        </button>
+                        <button *ngIf="departamento.editando" class="btn btn-primary btn-sm me-2"
+                            (click)="editarDepartamento(departamento)">
+                            Registrar
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                            (click)="eliminarDepartamento(departamento.id_departamento)">
+                            Eliminar
+                        </button>
+                    </td>
+                    <td>
+                        <span *ngIf="!departamento.editando">{{ departamento.nombre }}</span>
+                        <input *ngIf="departamento.editando" [(ngModel)]="departamento.nombre" class="form-control" />
+                    </td>
+                    <td>
+                        <span *ngIf="!departamento.editando">
+                            {{ getPaisNombre(departamento.id_pais) }}
+                        </span>
+                        <select *ngIf="departamento.editando" [(ngModel)]="departamento.id_pais" class="form-select">
+                            <option value="" disabled selected>Seleccionar país</option>
+                            <option *ngFor="let pais of paises" [value]="pais.id_pais">
+                                {{ pais.nombre }}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

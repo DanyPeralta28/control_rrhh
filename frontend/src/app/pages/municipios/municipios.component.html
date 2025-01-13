@@ -1,0 +1,68 @@
+<div class="container mt-2">
+    <h4 class="text-center">Municipios</h4>
+    <br>
+    <div class="mb-4">
+        <div class="d-flex align-items-center mb-2">
+            <select [(ngModel)]="departamentoSeleccionado" name="departamentoSeleccionado" class="form-select me-2"
+                [ngClass]="{'is-invalid': isSubmitted && !departamentoSeleccionado}" required>
+                <option value="" disabled [selected]="!departamentoSeleccionado">Seleccionar departamento</option>
+                <option *ngFor="let departamento of departamentos" [value]="departamento.id_departamento">
+                    {{ departamento.nombre }}
+                </option>
+            </select>
+
+            <input id="nuevoMunicipio" [(ngModel)]="nuevoMunicipio" class="form-control me-2"
+                placeholder="Nombre del municipio" />
+
+            <button class="btn btn-dark" (click)="agregarMunicipio()"
+                [disabled]="!departamentoSeleccionado || !nuevoMunicipio.trim()">
+                Agregar
+            </button>
+        </div>
+        <div *ngIf="!departamentoSeleccionado || !nuevoMunicipio.trim()" class="text-danger small">
+            Debes seleccionar un departamento y escribir el nombre del municipio.
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Acciones</th>
+                <th style="width: 30%;">Nombre del Municipio</th>
+                <th style="width: 30%;">Departamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let municipio of municipios">
+                <td class="d-flex justify-content-start align-items-center">
+                    <button *ngIf="!municipio.editando" class="btn btn-secondary btn-sm me-2"
+                        (click)="habilitarEdicion(municipio)">
+                        Editar
+                    </button>
+                    <button *ngIf="municipio.editando" class="btn btn-primary btn-sm me-2"
+                        (click)="editarMunicipio(municipio)">
+                        Registrar
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="eliminarMunicipio(municipio.id_municipio)">
+                        Eliminar
+                    </button>
+                </td>
+                <td>
+                    <span *ngIf="!municipio.editando">{{ municipio.nombre }}</span>
+                    <input *ngIf="municipio.editando" [(ngModel)]="municipio.nombre" class="form-control" />
+                </td>
+                <td>
+                    <span *ngIf="!municipio.editando">
+                        {{ getDepartamentoNombre(municipio.id_departamento) }}
+                    </span>
+                    <select *ngIf="municipio.editando" [(ngModel)]="municipio.id_departamento" class="form-select">
+                        <option value="" disabled selected>Seleccionar departamento</option>
+                        <option *ngFor="let departamento of departamentos" [value]="departamento.id_departamento">
+                            {{ departamento.nombre }}
+                        </option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

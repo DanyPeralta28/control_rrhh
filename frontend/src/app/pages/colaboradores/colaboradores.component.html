@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="col-md-12">
+    <h4 class="text-center">Colaboradores</h4>
+
+    <form (ngSubmit)="agregarColaborador()" #colaboradoresForm="ngForm" class="mb-5">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre*:</label>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="nuevoColaborador.nombre" class="form-control"
+          placeholder="Ingrese el nombre" required>
+        <div *ngIf="colaboradoresForm.submitted && !nuevoColaborador.nombre">
+          <small class="text-danger">Hace falta el nombre</small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="edad" class="form-label">Edad*:</label>
+        <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="number" id="edad" name="edad" [(ngModel)]="nuevoColaborador.edad" class="form-control"
+          placeholder="Ingrese la edad" required>
+        <div *ngIf="colaboradoresForm.submitted && !nuevoColaborador.edad">
+          <small class="text-danger">Hace falta la edad</small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono*:</label>
+        <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="number" id="telefono" name="telefono" [(ngModel)]="nuevoColaborador.telefono" class="form-control"
+          placeholder="Ingrese el teléfono" required>
+        <div *ngIf="colaboradoresForm.submitted && !nuevoColaborador.telefono">
+          <small class="text-danger">Hace falta el teléfono</small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo*:</label>
+        <input type="email" id="correo" name="correo" [(ngModel)]="nuevoColaborador.correo" class="form-control"
+          placeholder="Ingrese el correo electrónico" required>
+        <div *ngIf="colaboradoresForm.submitted && !nuevoColaborador.correo">
+          <small class="text-danger">Hace falta el correo</small>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="empresa" class="form-label">Empresa*:</label>
+        <select id="empresa" name="empresa" [(ngModel)]="nuevoColaborador.id_empresa" class="form-select" required>
+          <option value="" disabled selected>Seleccione una empresa</option>
+          <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">{{empresa.nombre_comercial}}</option>
+        </select>
+        <div *ngIf="colaboradoresForm.submitted && !nuevoColaborador.id_empresa">
+          <small class="text-danger">Hace falta seleccionar una empresa</small>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-secondary w-20">
+        Agregar Colaborador
+      </button>
+    </form>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Acciones</th>
+          <th>Nombre</th>
+          <th>Edad</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th>Empresa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let colaborador of colaboradores">
+          <td>
+            <button *ngIf="!colaborador.editando" class="btn btn-secondary btn-sm"
+              (click)="habilitarEdicion(colaborador)">
+              Editar
+            </button>
+            <button *ngIf="colaborador.editando" class="btn btn-primary btn-sm"
+              (click)="editarColaborador(colaborador)">
+              Regristrar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="eliminarColaborador(colaborador.id_colaborador)">
+              Eliminar
+            </button>
+          </td>
+          <td>
+            <input *ngIf="colaborador.editando" [(ngModel)]="colaborador.nombre" class="form-control" />
+            <span *ngIf="!colaborador.editando">{{ colaborador.nombre }}</span>
+          </td>
+          <td>
+            <input *ngIf="colaborador.editando" [(ngModel)]="colaborador.edad" class="form-control" />
+            <span *ngIf="!colaborador.editando">{{ colaborador.edad }}</span>
+          </td>
+          <td>
+            <input *ngIf="colaborador.editando" [(ngModel)]="colaborador.telefono" class="form-control" />
+            <span *ngIf="!colaborador.editando">{{ colaborador.telefono }}</span>
+          </td>
+          <td>
+            <input *ngIf="colaborador.editando" [(ngModel)]="colaborador.correo" class="form-control" />
+            <span *ngIf="!colaborador.editando">{{ colaborador.correo }}</span>
+          </td>
+          <td>
+            <select *ngIf="colaborador.editando" [(ngModel)]="colaborador.id_empresa" class="form-select">
+              <option *ngFor="let empresa of empresas" [value]="empresa.id_empresa">{{ empresa.nombre_comercial }}
+              </option>
+            </select>
+            <span *ngIf="!colaborador.editando">{{ getEmpresaNombre(colaborador.id_empresa) }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

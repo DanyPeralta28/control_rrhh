@@ -1,0 +1,48 @@
+/* Estructura principal */
+.wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+/* Estilo del Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #2b3a67; /* Color oscuro */
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+  border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #3b3c3d;
+}
+
+/* Estilo del Contenido */
+.content {
+  flex-grow: 1; /* Se ajusta automáticamente al espacio disponible */
+  padding: 20px;
+  overflow-y: auto; /* Agregar scroll si el contenido es muy grande */
+}
+

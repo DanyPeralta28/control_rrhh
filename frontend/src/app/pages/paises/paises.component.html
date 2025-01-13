@@ -1,0 +1,44 @@
+<h4 class="text-center">Países</h4>
+<br>
+<div class="mb-4">
+  <div class="d-flex align-items-center mb-2">
+    <input id="nuevoPais" [(ngModel)]="nuevoPais" class="form-control me-2" placeholder="Nombre del país"
+      [ngClass]="{'is-invalid': !nuevoPais.trim()}" />
+    <button class="btn btn-dark" (click)="agregarPais()" [disabled]="!nuevoPais.trim()">
+      Agregar
+    </button>
+  </div>
+  <div *ngIf="!nuevoPais.trim()" class="text-danger small">
+    Debes escribir el nombre del país.
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th style="width: 40%;">Acciones</th>
+      <th style="width: 60%;">Nombre del País</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pais of paises">
+      <td class="d-flex justify-content-start align-items-center">
+        <button *ngIf="!pais.editando" class="btn btn-secondary btn-sm me-2" (click)="habilitarEdicion(pais)">
+          Editar
+        </button>
+        <button *ngIf="pais.editando" class="btn btn-primary btn-sm me-2" (click)="editarPais(pais)">
+          Registrar
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="eliminarPais(pais.id_pais)">
+          Eliminar
+        </button>
+      </td>
+      <td>
+        <span *ngIf="!pais.editando">{{ pais.nombre }}</span>
+        <input *ngIf="pais.editando" [(ngModel)]="pais.nombre" class="form-control"
+          placeholder="Editar nombre del país" />
+      </td>
+
+    </tr>
+  </tbody>
+</table>

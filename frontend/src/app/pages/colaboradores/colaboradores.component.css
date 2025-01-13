@@ -1,0 +1,23 @@
+.table td .d-flex {
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.formulario-empresa .form-group {
+  margin-bottom: 1.0rem;
+}
+
+.formulario-empresa label {
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.formulario-empresa .form-control {
+  border-radius: 5px;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+}
